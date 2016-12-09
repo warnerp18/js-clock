@@ -35,13 +35,26 @@
       margin: 50px auto;
       position: relative;
       padding: 2rem;
-      box-shadow: 0 0 0px 4px rgba(0,0,0,0.1), inset 0 0 0 3px #EFEFEF, inset 0 0 10px black, 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 0px 4px rgba(0,0,0,0.1), inset 0 0 0 3px #000, inset 0 0 10px black, 0 0 10px rgba(0,0,0,0.2);
     }
     .clock-face{
       position: relative;
       width: 100%;
       height: 100%;
       transform: translateY(-3px);
+    }
+    .clock-face:after {
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: black;
+      position: absolute;
+      top: 46%;
+      left: 49%;
+      z-index: 9;
+      content: "";
+      transform: translate(-50%);
     }
     .hand{
       position: absolute;
@@ -62,7 +75,8 @@
     const secondHand = document.querySelector('.second');
     const minuteHand = document.querySelector('.minute');
     const hoursHand = document.querySelector('.hour');
-    const hand = document.querySelector('.hand');
+    const clock = document.querySelector('.clock');
+    console.log(clock);
     let counter = {
       s: 0,
       m: 0,
@@ -95,12 +109,18 @@ let previous = null;
         m: minutes,
         h: hours,
       };
-      console.log(seconds);
-      console.log(seconds + 360 * counter.s);
+      const rgb = {
+         r: Math.floor(previous.s * 4.25),
+         g: Math.floor(previous.m * 4.25),
+         b: Math.floor(previous.h * 4.25),
+      }
+      console.log(`${rgb.r},${rgb.b},${rgb.b}`);
       secondHand.style.transform = `rotate(${secondsDegree + 360 * counter.s}deg)`;
       minuteHand.style.transform = `rotate(${minutesDegree + 360 * counter.m}deg)`;
       hoursHand.style.transform = `rotate(${hoursDegree + 360 * counter.h}deg)`;
+      clock.style.border = `20px solid rgb(${rgb.r},${rgb.b},${rgb.b})`
     }
+
 
     setInterval(setDate, 1000);
   </script>
